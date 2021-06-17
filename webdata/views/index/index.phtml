@@ -1,3 +1,28 @@
+<?php
+
+$unit_parents = array();
+foreach (Unit::search(1) as $unit) {
+    $data = json_decode($unit->data);
+    if (!array_key_exists($data->parent, $unit_parents)) {
+        $unit_parents[$data->parent] = array();
+    }
+    $unit_parents[$data->parent][] = $unit;
+}
+
+?>
 <?= $this->partial('/common/header.phtml', $this) ?>
+<ul>
+    <?php foreach ($unit_parents[0] as $unit) { ?>
+    <li>
+    <?= $unit->id ?> . <a href="/index/unit/<?= urlencode($unit->name) ?>"><?= $this->escape($unit->name) ?></a>
+    <ul>
+        <?php foreach ($unit_parents[$unit->id] as $cunit) { ?>
+        <li><?= $cunit->id ?> . <a href="/index/unit/<?= urlencode($unit->name) ?>"><?= $this->escape($cunit->name) ?></a></li>
+        <?php } ?>
+    </ul>
+    </li>
+    <?php } ?>
+</ul>
+
 <?= $this->partial('/common/footer.phtml', $this) ?>
 

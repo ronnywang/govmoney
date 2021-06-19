@@ -42,7 +42,7 @@ while ($rows = fgetcsv($fp)) {
         $year_id_name->{$key} = $u->id;
 
         $data = json_decode($u->data);
-        $data->year_id->{$values['年']} = $id2;
+        $data->year_id->{"{$values['年']}-{$id2}"} = $id2;
         if ($id2 % 100 != 0 and $data->parent == 0) {
             $data->parent = $year_id_name->{$values['年'] . ' ' . floor($id2 / 100) * 100};
         }

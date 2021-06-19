@@ -1,0 +1,13 @@
+<?php
+$entries = Entry::search(array('unit_id' => $this->unit_id, 'parent_id' => $this->parent_id));
+?>
+<?php if (count($entries)) { ?>
+<ul>
+    <?php foreach ($entries as $entry) { ?>
+    <li>
+    <?= $this->escape($entry->name) ?>
+    <?= $this->partial('/index/entry_children.phtml', array('unit_id' => $this->unit_id, 'parent_id' => $entry->entry_id)) ?>
+    </li>
+    <?php } ?>
+</ul>
+<?php } ?>

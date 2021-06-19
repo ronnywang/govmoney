@@ -17,6 +17,13 @@ while ($rows = fgetcsv($fp)) {
     // 0201 = 總統府主管 (中央政府歲出機關別科目編號表)
     // 04 = 歲入為來源別子目之編號，歲出為業務計畫科目之編號。
     // 00 = 歲入為來源別細目之編號，歲出為工作計畫科目之編號。
+    if (strlen($values['科目編號']) == 11) {
+        $values['科目編號'] = substr($values['科目編號'], 0, 4) . substr($values['科目編號'], 5);
+    } else if (strlen($values['科目編號']) == 10) {
+    } else {
+        print_r($values);
+        exit;
+    }
     $id = $values['科目編號'];
     $id1 = substr($id, 0, 2);
     $id2 = intval(substr($id, 2, 4));

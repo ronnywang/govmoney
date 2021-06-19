@@ -11,6 +11,7 @@ class Entry extends Pix_Table
         $this->_columns['unit_id'] = array('type' => 'int');
         $this->_columns['parent_id'] = array('type' => 'int');
         $this->_columns['name'] = array('type' => 'varchar', 'size' => 64);
+        $this->_columns['data'] = array('type' => 'text');
 
         $this->addIndex('unit_parent_name', array('unit_id', 'parent_id', 'name'), 'unique');
     }

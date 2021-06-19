@@ -17,7 +17,7 @@ foreach (Unit::search(1) as $unit) {
     <?= $unit->id ?> . <a href="/index/unit/<?= urlencode($unit->name) ?>"><?= $this->escape($unit->name) ?></a>
     <ul>
         <?php foreach ($unit_parents[$unit->id] as $cunit) { ?>
-        <li><?= $cunit->id ?> . <a href="/index/unit/<?= urlencode($unit->name) ?>"><?= $this->escape($cunit->name) ?></a></li>
+        <li><?= $cunit->id ?> . <a href="/index/unit/<?= urlencode($cunit->name) ?>"><?= $this->escape($cunit->name) ?></a></li>
         <?php } ?>
     </ul>
     </li>

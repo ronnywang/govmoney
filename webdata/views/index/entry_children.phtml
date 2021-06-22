@@ -11,6 +11,7 @@ foreach (EntryValue::search(1)->searchIn('entry_id', array_keys($entries)) as $e
 
 ?>
 <?php foreach ($entries as $entry) { ?>
+<?php $id110 = ''; ?>
 <?php foreach (json_decode($entry->data)->year_id as $year_id => $id) { ?>
 <?php if (explode('-', $year_id)[0] == 110) { $id110 = $id; break; } ?>
 <?php } ?>

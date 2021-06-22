@@ -1,5 +1,26 @@
 <?= $this->partial('/common/header.phtml', $this) ?>
 <h1><?= $this->escape($this->unit->name) ?></h1>
-<?= $this->partial('/index/entry_children.phtml', array('unit_id' => $this->unit->id, 'parent_id' => 0)) ?>
+<table class="table">
+    <thead>
+        <tr>
+            <th>科目名稱</th>
+            <th>110 年代碼</th>
+            <?php for ($y = 108; $y <= 110; $y ++) { ?>
+            <th><?= $y ?> 年預算案</th>
+            <?php } ?>
+        </tr>
+    </thead>
+    <?= $this->partial('/index/entry_children.phtml', array('unit_id' => $this->unit->id, 'parent_id' => 0, 'level' => 0)) ?>
+</table>
+<script>
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl, {
+        html: true, 
+        trigger: 'focus',
+    })
+})
+
+</script>
 <?= $this->partial('/common/footer.phtml', $this) ?>
 

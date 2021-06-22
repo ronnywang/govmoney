@@ -1,13 +1,35 @@
 <?php
-$entries = Entry::search(array('unit_id' => $this->unit_id, 'parent_id' => $this->parent_id));
+$entries = array();
+foreach (Entry::search(array('unit_id' => $this->unit_id, 'parent_id' => $this->parent_id)) as $entry) {
+    $entries[$entry->entry_id] = $entry;
+};
+
+$entry_values = new StdClass;
+foreach (EntryValue::search(1)->searchIn('entry_id', array_keys($entries)) as $entry_value) {
+    $entry_values->{$entry_value->entry_id . '-' . $entry_value->category . '-' . $entry_value->time} = $entry_value;
+}
+
 ?>
-<?php if (count($entries)) { ?>
-<ul>
-    <?php foreach ($entries as $entry) { ?>
-    <li>
-    <?= $this->escape($entry->name) ?>
-    <?= $this->partial('/index/entry_children.phtml', array('unit_id' => $this->unit_id, 'parent_id' => $entry->entry_id)) ?>
-    </li>
+<?php foreach ($entries as $entry) { ?>
+<?php foreach (json_decode($entry->data)->year_id as $year_id => $id) { ?>
+<?php if (explode('-', $year_id)[0] == 110) { $id110 = $id; break; } ?>
+<?php } ?>
+<tr>
+    <td style="padding-left: <?= $this->level * 50 ?>px">
+        <?= $this->escape($entry->name) ?>
+    </td>
+    <td><?= $id110 ?></td>
+    <?php for ($y = 108; $y <= 110; $y ++) { ?>
+    <?php $k = $entry->entry_id . '-預算案-' . $y; ?>
+    <td>
+        <?= intval($entry_values->{$k}->value) ?>
+        <?php if ($t = json_decode($entry_values->{$k}->data)->{'說明'}) { ?>
+        <i class="bi bi-patch-question" data-bs-toggle="popover" title="<?= $this->escape($entry->name) ?>" data-bs-content="<pre><?= $this->escape($t) ?></pre>" tabindex="<?= (++ $c) ?>"></i>
+
+        <?php } ?>
+    </td>
     <?php } ?>
-</ul>
+</tr>
+<?= $this->partial('/index/entry_children.phtml', array('unit_id' => $this->unit_id, 'parent_id' => $entry->entry_id, 'level' => $this->level + 1)) ?>
+</li>
 <?php } ?>

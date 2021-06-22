@@ -5,6 +5,8 @@ include(__DIR__ . '/../init.inc.php');
 Pix_Setting::set('Table:DropTableEnable', true);
 Entry::dropTable();
 Entry::createTable();
+EntryValue::dropTable();
+EntryValue::createTable();
 
 $unit_map = new StdClass;
 foreach (Unit::search(1) as $unit) {
@@ -83,5 +85,14 @@ while ($rows = fgetcsv($fp)) {
             $names[$index + 1] = $entry->entry_id;
             $unit_item->{$key} = $entry;
         }
+        EntryValue::insert(array(
+            'entry_id' => $entry->entry_id,
+            'category' => '預算案',
+            'time' => $year,
+            'value' => intval($values['本年預算數']),
+            'data' => json_encode(array(
+                '說明' => $values['說明'],
+            )),
+        ));
     }
 }

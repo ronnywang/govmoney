@@ -20,14 +20,16 @@ foreach (EntryValue::search(1)->searchIn('entry_id', array_keys($entries)) as $e
     </td>
     <td><?= $id110 ?></td>
     <?php for ($y = 108; $y <= 110; $y ++) { ?>
-    <?php $k = $entry->entry_id . '-預算案-' . $y; ?>
+    <?php foreach (array('預算案', '法定預算', '決算') as $type) { ?>
+    <?php $k = $entry->entry_id . '-' . $type . '-' . $y; ?>
     <td>
-        <?= intval($entry_values->{$k}->value) ?>
+        <?= $entry_values->{$k}->value ?>
         <?php if ($t = json_decode($entry_values->{$k}->data)->{'說明'}) { ?>
         <i class="bi bi-patch-question" data-bs-toggle="popover" title="<?= $this->escape($entry->name) ?>" data-bs-content="<pre><?= $this->escape($t) ?></pre>" tabindex="<?= (++ $c) ?>"></i>
 
         <?php } ?>
     </td>
+    <?php } ?>
     <?php } ?>
 </tr>
 <?= $this->partial('/index/entry_children.phtml', array('unit_id' => $this->unit_id, 'parent_id' => $entry->entry_id, 'level' => $this->level + 1)) ?>

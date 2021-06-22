@@ -3,10 +3,17 @@
 <table class="table">
     <thead>
         <tr>
-            <th>科目名稱</th>
-            <th>110 年代碼</th>
+            <th rowspan="2">科目名稱</th>
+            <th rowspan="2">110 年代碼</th>
             <?php for ($y = 108; $y <= 110; $y ++) { ?>
-            <th><?= $y ?> 年預算案</th>
+            <th colspan="3"><?= $y ?>年</th>
+            <?php } ?>
+        </tr>
+        <tr>
+            <?php for ($y = 108; $y <= 110; $y ++) { ?>
+            <th>預算案</th>
+            <th>法定預算</th>
+            <th>決算</th>
             <?php } ?>
         </tr>
     </thead>

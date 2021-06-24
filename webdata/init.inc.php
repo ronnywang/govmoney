@@ -17,4 +17,4 @@ Pix_Table::setLongQueryTime(3);
 date_default_timezone_set('Asia/Taipei');
 
 
-Pix_Table::setDefaultDb(new Pix_Table_Db_Adapter_Sqlite(__DIR__ . '/data.sqlite'));
+Pix_Table_Db::addDbFromURI(getenv('DATABASE_URL'));
